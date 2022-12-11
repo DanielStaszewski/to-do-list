@@ -5,6 +5,7 @@ import App from './App.vue';
 
 import './assets/main.css';
 import router from './router';
+import {store} from './store/index';
 
 import 'vuetify/styles';
 import { createVuetify } from 'vuetify';
@@ -57,6 +58,7 @@ const app = createApp(App);
 
 app.use(router);
 app.use(vuetify);
+app.use(store);
 
 app.config.errorHandler = (err) => {
     console.error(err);
