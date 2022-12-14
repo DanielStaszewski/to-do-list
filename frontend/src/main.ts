@@ -1,6 +1,4 @@
 import { createApp } from 'vue';
-import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
 import App from './App.vue';
 
 import './assets/main.css';
@@ -13,23 +11,6 @@ import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import '@mdi/font/css/materialdesignicons.css';
-import { firebaseConfig } from './config/firebase.config';
-
-
-// Your web app's Firebase configuration
-
-const firestoreApp = initializeApp(firebaseConfig);
-const database = getDatabase(firestoreApp);
-
-function writeUserData(userId: any, name: any ) {
-  const db = getDatabase();
-  set(ref(db, 'users/' + userId), {
-    username: name
-  });
-}
-
-//writeUserData("fdfds", "dupa");
-
 
 
 const vuetify = createVuetify({
