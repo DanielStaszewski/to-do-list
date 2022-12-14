@@ -16,7 +16,7 @@
 
             },
             submit(){
-
+                this.$emit("submit");
             }
         },
         data: () => ({
