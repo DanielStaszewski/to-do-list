@@ -1,6 +1,4 @@
 <script lang="ts">
-import { uuidv4 } from '@firebase/util';
-import { get, getDatabase, ref, remove, set, update } from 'firebase/database';
 import TaskListItem from '../components/TaskListItem.vue';
 import TheToolbar from './TheToolbar.vue';
 
@@ -16,33 +14,26 @@ export default {
     }),
     methods: {
         async getAllTasks(){
-            const db = getDatabase();
             try{
-                const fetchedTasks = (await get(ref(db, 'tasks'))).val();
-                Object.keys(fetchedTasks).forEach(id => this.tasks.push({id, ...fetchedTasks[id]}));
+ 
             } catch(error) {
                 return Promise.reject(error);
             }
             },
         async onAddNewTask(){
             if(!this.newTask) return;
-            const db = getDatabase();
-            const newId = uuidv4();
+
             const newTask = {text: this.newTask};
             try{
-                await update(ref(db, 'tasks/' + newId), newTask);
-                this.newTask = null;
-                this.tasks.push(newTask);
+              
             } catch(error) {
                 return Promise.reject(error);
             } 
         },
         async onRemoveTask(task: {id: string, text: string}){
             if(!task) return;
-            const db = getDatabase();
             try{
-                await remove(ref(db, 'tasks/' + task.id))
-                this.tasks = this.tasks.filter(task => (task as any).text !== task.text);
+       
             } catch(error) {
                 return Promise.reject(error);
             }   

@@ -1,6 +1,5 @@
 <script lang="ts">
 import { uuidv4 } from '@firebase/util';
-import api from '../config/my-api.config';
 
     export default {
         data(){
@@ -12,7 +11,7 @@ import api from '../config/my-api.config';
             onAddTaskClick(){
                 //const taskId = uuidv4();
                 //this.$emit("addTask", {id: taskId, name: this.taskName});
-                api.get('orders').then(response => console.log(response));
+             
             }
         }
     }
