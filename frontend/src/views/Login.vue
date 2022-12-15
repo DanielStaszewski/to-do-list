@@ -8,6 +8,8 @@ export default {
         Modal
     },
     data: () => ({
+        loading: false,
+        message: "",
         valid: true,
         email: '',
         emailRules: [
@@ -30,13 +32,42 @@ export default {
         resetValidation() {
             (this.$refs.form as HTMLFormElement).resetValidation()
         },
-    }
+        handleLogin() {
+            const user = {email: this.email, password: this.password};
+            this.loading = true;
+
+            this.$store.dispatch("auth/login", user).then(
+                () => {
+                    this.$router.push("/next-seven-days");
+                },
+                (error) => {
+                    this.loading = false;
+                    this.message =
+                        (error.response &&
+                            error.response.data &&
+                            error.response.data.message) ||
+                        error.message ||
+                        error.toString();
+                }
+            );
+        }
+    },
+    computed: {
+        loggedIn() {
+            return this.$store.state.auth.status.loggedIn;
+        }
+    },
+    created() {
+        if (this.loggedIn) {
+            this.$router.push("/next-seven-days");
+        }
+    },
 }
 </script>
 
 <template>
     <Backdrop></Backdrop>
-    <Modal :submit-button="{type: 'primary', text: 'Submit'}" :title="'Login'">
+    <Modal :submit-button="{ type: 'primary', text: 'Submit' }" :title="'Login'" @submit="handleLogin">
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
             <v-text-field v-model="password" :counter="10" :rules="passwordRules" label="Password"

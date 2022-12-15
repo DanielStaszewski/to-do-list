@@ -41,6 +41,7 @@ app.use(router);
 app.use(vuetify);
 app.use(store);
 
+
 app.config.errorHandler = (err) => {
     console.error(err);
 }
