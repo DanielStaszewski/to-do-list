@@ -26,7 +26,11 @@ const vuetify = createVuetify({
       theme: {
         themes: {
           light: {
-            dark: false,
+            colors: {
+              primaryFontColor: "FFFFFF"
+            }
+          },
+          dark: {
             colors: {
               primaryFontColor: "FFFFFF"
             }
