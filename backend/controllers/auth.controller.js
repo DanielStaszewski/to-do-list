@@ -29,10 +29,17 @@ exports.signup = (req, res) => {
           });
         });
       } else {
-        // user role = 1
-        user.setRoles("User").then(() => {
+        Role.findOne({
+          where: { Name: "User" }
+        })
+        .then(
+          role => {
+            return user.setRoles(role);
+          }
+        )
+        .then(() => {
           res.send({ message: "User was registered successfully!" });
-        });
+        })
       }
     })
     .catch(err => {

@@ -28,7 +28,7 @@ isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin") {
+          if (roles[i].name === "Admin") {
             next();
             return;
           }
@@ -46,7 +46,7 @@ isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
+          if (roles[i].name === "Moderator") {
             next();
             return;
           }
@@ -63,12 +63,12 @@ isAdmin = (req, res, next) => {
     User.findByPk(req.userId).then(user => {
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "moderator") {
+          if (roles[i].name === "Moderator") {
             next();
             return;
           }
   
-          if (roles[i].name === "admin") {
+          if (roles[i].name === "Admin") {
             next();
             return;
           }

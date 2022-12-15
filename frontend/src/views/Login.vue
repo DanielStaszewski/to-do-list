@@ -1,13 +1,16 @@
 <script lang="ts">
 import Backdrop from "../components/TheBackdrop.vue";
 import Modal from "../components/TheModal.vue";
+import Alert from "../components/TheAlert.vue";
 
 export default {
     components: {
         Backdrop,
-        Modal
+        Modal,
+        Alert
     },
     data: () => ({
+        alert: false,
         loading: false,
         message: "",
         valid: true,
@@ -22,7 +25,7 @@ export default {
             (v: string) => (v && v.length <= 10) || 'Name must be less than 10 characters',
         ]
     }),
-    methods: {
+    methods: { 
         validate() {
             (this.$refs.form as HTMLFormElement).validate()
         },
@@ -52,6 +55,16 @@ export default {
             );
         }
     },
+    watch: {
+        message(value: string){
+            if(!value) return;
+            this.alert = true;
+            setTimeout(() => {
+                this.alert = false;
+                this.message = "";
+            }, 3000);
+        }
+    },
     computed: {
         loggedIn() {
             return this.$store.state.auth.status.loggedIn;
@@ -67,6 +80,7 @@ export default {
 
 <template>
     <Backdrop></Backdrop>
+    <Alert :title="'Error'" :message="message" :type="'error'" v-if="alert"></Alert>
     <Modal :submit-button="{ type: 'primary', text: 'Submit' }" :title="'Login'" @submit="handleLogin">
         <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
@@ -74,6 +88,7 @@ export default {
                 required></v-text-field>
         </v-form>
     </Modal>
+    
 </template>
 
 <style lang="scss">
