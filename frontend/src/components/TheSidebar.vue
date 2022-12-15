@@ -22,9 +22,15 @@ export default {
     <v-card>
         <v-layout>
             <v-navigation-drawer permanent location="left" theme="dark">
+
                 <template v-slot:prepend>
-                    <v-list-item lines="two" :prepend-avatar="userData?.image"
-                        :title="userData?.name + ' ' + userData?.surname" subtitle="Logged in"></v-list-item>
+                    <v-list-item lines="two" :title="userData?.name + ' ' + userData?.surname" subtitle="Logged in">
+                        <template v-slot:prepend>
+                            <v-avatar>
+                                <v-img :src="userData?.image ?? '../src/assets/user.svg'"></v-img>
+                            </v-avatar>
+                        </template>
+                    </v-list-item>
                 </template>
 
                 <v-divider></v-divider>
