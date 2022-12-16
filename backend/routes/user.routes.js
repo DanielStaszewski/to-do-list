@@ -29,4 +29,11 @@ module.exports = function(app) {
     [authJwt.verifyToken, authJwt.isAdmin],
     controller.adminBoard
   );
+
+  app.post(
+    "/api/user/uploadImage",
+    [authJwt.verifyToken],
+    controller.uploadImage
+  );
+  
 };

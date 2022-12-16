@@ -1,9 +1,10 @@
 import type { User } from "@/models/user.model";
 import type { Commit } from "vuex";
 import AuthService from "../../services/auth.service";
+import UserService from "../../services/user.service";
 
-let user = localStorage.getItem("user");
-user = user ? JSON.parse(user) : null;
+let user = localStorage.getItem("user") as unknown;
+user = user ? (JSON.parse(user as string) as User) : null;
 
 interface AuthState {
   status: {
@@ -48,6 +49,21 @@ export const authModule = {
         }
       );
     },
+    uploadUserImage({ commit }: { commit: Commit }, formData: FormData) {
+      const userId = (authModule.state.user as User).id;
+      formData.append("userId", userId);
+      if (!userId) return;
+      return UserService.uploadUserImage(formData).then(
+        (response) => {
+          commit("uploadUserImageSuccess");
+          return Promise.resolve(response);
+        },
+        (error) => {
+          commit("uploadUserImageFailure");
+          return Promise.reject(error);
+        }
+      );
+    },
   },
   mutations: {
     loginSuccess(state: AuthState, user: User) {
@@ -67,6 +83,9 @@ export const authModule = {
     },
     registerFailure(state: AuthState) {
       state.status.loggedIn = false;
+    },
+    uploadUserImageSuccess(state: AuthState, userImage: string) {
+        if(state.user) state.user.image = userImage;
     },
   },
   getters: {

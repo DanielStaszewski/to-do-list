@@ -4,10 +4,24 @@ export default {
     components: {
         Button
     },
+    data() {
+        return {
+            userImage: ''
+        }
+    },
     methods: {
         logout() {
             this.$store.dispatch('auth/logout');
             this.$router.push('/login');
+        },
+        uploadAvatar(e: any) {
+            const formData = new FormData();
+            const image = e.target.files[0];
+            formData.append('image', image);
+            this.$store.dispatch("auth/uploadUserImage", formData);
+        },
+        onUploadAvatarClick() {
+            (this.$refs.uploadLink as HTMLInputElement).click();
         }
     },
     computed: {
@@ -26,9 +40,14 @@ export default {
                 <template v-slot:prepend>
                     <v-list-item lines="two" :title="userData?.name + ' ' + userData?.surname" subtitle="Logged in">
                         <template v-slot:prepend>
-                            <v-avatar>
+                            <v-avatar size="x-large" class="user__avatar">
                                 <v-img :src="userData?.image ?? '../src/assets/user.svg'"></v-img>
                             </v-avatar>
+                            <div class="user__plus" v-if="!userData?.image" @click="onUploadAvatarClick">
+                                <v-icon>mdi-plus-circle</v-icon>
+                            </div>
+                            <input ref="uploadLink" type="file" accept="image/jpeg,image/png,image/jpg"
+                                @change="uploadAvatar" hidden>
                         </template>
                     </v-list-item>
                 </template>
@@ -61,6 +80,18 @@ export default {
 .list {
 
     &__item {
+        color: $primary;
+    }
+
+}
+
+.user {
+
+    &__plus {
+        position: absolute;
+        top: 36px;
+        left: -7px;
+        cursor: pointer;
         color: $primary;
     }
 

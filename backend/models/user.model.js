@@ -18,7 +18,7 @@ module.exports = (sequalize, Sequelize) => {
                 type: Sequelize.STRING
             },
             Image: {
-                type: Sequelize.STRING.BINARY
+                type: Sequelize.STRING
             },
             Password: {
                 type: Sequelize.STRING
