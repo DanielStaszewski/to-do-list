@@ -55,8 +55,8 @@ export const authModule = {
       if (!userId) return;
       return UserService.uploadUserImage(formData).then(
         (response) => {
-          commit("uploadUserImageSuccess");
-          return Promise.resolve(response);
+          commit("uploadUserImageSuccess", response.data);
+          return Promise.resolve(response.data);
         },
         (error) => {
           commit("uploadUserImageFailure");
@@ -84,8 +84,8 @@ export const authModule = {
     registerFailure(state: AuthState) {
       state.status.loggedIn = false;
     },
-    uploadUserImageSuccess(state: AuthState, userImage: string) {
-        if(state.user) state.user.image = userImage;
+    uploadUserImageSuccess(state: AuthState, response: {message: string, image: string}) {
+        if(state.user) state.user.image = response.image;
     },
   },
   getters: {

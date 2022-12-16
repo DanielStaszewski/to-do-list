@@ -41,9 +41,11 @@ export default {
                     <v-list-item lines="two" :title="userData?.name + ' ' + userData?.surname" subtitle="Logged in">
                         <template v-slot:prepend>
                             <v-avatar size="x-large" class="user__avatar">
-                                <v-img :src="userData?.image ?? '../src/assets/user.svg'"></v-img>
+                                <v-img
+                                    :src="userData?.image ? 'data:image/jpeg;base64, ' + userData?.image : '../src/assets/user.svg'">
+                                </v-img>
                             </v-avatar>
-                            <div class="user__plus" v-if="!userData?.image" @click="onUploadAvatarClick">
+                            <div class="user__plus" @click="onUploadAvatarClick">
                                 <v-icon>mdi-plus-circle</v-icon>
                             </div>
                             <input ref="uploadLink" type="file" accept="image/jpeg,image/png,image/jpg"

@@ -4,6 +4,7 @@ const db = require("../models");
 const config = require("../configs/auth.config");
 const User = db.user;
 const Role = db.role;
+const convertBase64 = require('../utils/file-to-base64.function');
 
 const Op = db.Sequelize.Op;
 
@@ -74,6 +75,8 @@ exports.signin = (req, res) => {
         expiresIn: 86400 // 24 hours
       });
 
+      const userImage = user.Image ? convertBase64(user.Image) : null;
+
       const authorities = [];
       user.getRoles().then(roles => {
         for (let i = 0; i < roles.length; i++) {
@@ -84,6 +87,7 @@ exports.signin = (req, res) => {
           name: user.Name,
           surname: user.Surname,
           email: user.Email,
+          image: userImage,
           roles: authorities,
           accessToken: token
         });
