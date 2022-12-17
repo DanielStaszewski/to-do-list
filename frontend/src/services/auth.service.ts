@@ -1,27 +1,29 @@
 
+import type { User } from '@/models/user.model';
 import type { AxiosResponse } from 'axios';
 import api from '../config/api.config';
+import tokenService from './token.service';
 
 
 class AuthService {
     
-    async login(user: any): Promise<{accessToken: string}> {
+    async login({email, password}: {email: string, password: string}): Promise<User> {
 
         return api.post(
             '/auth/signin',
             {
-                email: user.email,
-                password: user.password
+                email,
+                password
             }
         )
-        .then((response: AxiosResponse<{accessToken: string}>)=> {
-            if(response.data.accessToken)  localStorage.setItem('user', JSON.stringify(response.data));
+        .then((response: AxiosResponse<User>)=> {
+            if(response.data.accessToken)  tokenService.setUser(response.data);
             return response.data;
         })
     }
 
     logout() {
-        localStorage.removeItem('user');
+        tokenService.removeUser();
     }
 
     register(user: any) {

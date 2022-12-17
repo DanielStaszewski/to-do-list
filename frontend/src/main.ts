@@ -11,6 +11,7 @@ import * as components from 'vuetify/components';
 import * as directives from 'vuetify/directives';
 import { aliases, mdi } from 'vuetify/iconsets/mdi';
 import '@mdi/font/css/materialdesignicons.css';
+import setupInterceptors from './interceptors/auth.interceptor';
 
 
 const vuetify = createVuetify({
@@ -45,6 +46,7 @@ app.use(router);
 app.use(vuetify);
 app.use(store);
 
+setupInterceptors(store);
 
 app.config.errorHandler = (err) => {
     console.error(err);

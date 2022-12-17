@@ -1,4 +1,3 @@
-import authHeader from './auth-header.service';
 import api from '../config/api.config';
 
 
@@ -8,19 +7,21 @@ class UserService {
   }
 
   getUserBoard() {
-    return api.get('/test/user', { headers: authHeader() });
+    return api.get('/test/user');
   }
 
   getModeratorBoard() {
-    return api.get('/test/mod', { headers: authHeader() });
+    return api.get('/test/mod');
   }
 
   getAdminBoard() {
-    return api.get('/test/admin', { headers: authHeader() });
+    return api.get('/test/admin');
   }
 
   uploadUserImage(formData: FormData) {
-    return api.post('/user/uploadImage', formData, { headers: authHeader() });
+    return api.post('/user/uploadImage', formData, {headers: {
+      "Content-Type": "multipart/form-data"
+    }});
   }
 }
 

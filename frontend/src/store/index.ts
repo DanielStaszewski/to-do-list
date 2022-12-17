@@ -1,16 +1,19 @@
-import Vuex, { createLogger, createStore } from 'vuex';
-import {authModule} from './modules/auth.module';
+import Vuex, { createLogger, createStore, Store } from 'vuex';
+import {authModule, type AuthState} from './modules/auth.module';
 
 const debug = import.meta.env.DEV;
 
+export interface AppState {
+    auth: AuthState
+}
+
 export const store = createStore({
     state: {
-        daniel: "da"
     },
     modules: {
         auth: authModule
     },
     strict: debug,
     plugins: debug ? [ createLogger() ] : []
-});
+}) as Store<AppState>;
 

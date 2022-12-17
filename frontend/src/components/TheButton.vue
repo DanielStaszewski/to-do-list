@@ -8,7 +8,7 @@ export default {
             default: "primary" //primary, secondary, error
         }, 
         disabled: Boolean, //true, false
-        width: String //per-100 (100%)
+        width: String // (100%)
     },
     computed: {
         classList(): string{

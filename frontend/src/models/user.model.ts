@@ -6,5 +6,6 @@ export interface User {
     surname: string,
     email: string
     image?: any,
+    accessToken: string | null,
     roles: UserRole[]
 }
