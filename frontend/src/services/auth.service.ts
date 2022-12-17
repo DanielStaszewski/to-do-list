@@ -1,13 +1,14 @@
-import axios, { type AxiosResponse } from 'axios'
 
-const API_URL = 'http://localhost:8080/api/auth/';
+import type { AxiosResponse } from 'axios';
+import api from '../config/api.config';
+
 
 class AuthService {
     
     async login(user: any): Promise<{accessToken: string}> {
 
-        return axios.post(
-            API_URL + 'signin',
+        return api.post(
+            '/auth/signin',
             {
                 email: user.email,
                 password: user.password
@@ -24,7 +25,7 @@ class AuthService {
     }
 
     register(user: any) {
-        return axios.post(API_URL + 'signup', {
+        return api.post('/auth/signup', {
           name: user.name,
           surname: user.surname,
           email: user.email,
